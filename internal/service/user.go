@@ -12,3 +12,51 @@ func (s *RealWorldService) Login(ctx context.Context, req *v1.LoginRequest) (rep
 		},
 	}, nil
 }
+
+func (s *RealWorldService) Register(ctx context.Context, req *v1.RegisterRequest) (reply *v1.UserReply, err error) {
+	return &v1.UserReply{
+		User: &v1.UserReply_User{
+			Username: "ALEX",
+		},
+	}, nil
+}
+
+func (s *RealWorldService) GetCurrentUser(ctx context.Context, req *v1.GetCurrentUserRequest) (reply *v1.UserReply, err error) {
+	return &v1.UserReply{
+		User: &v1.UserReply_User{
+			Username: "ALEX",
+		},
+	}, nil
+}
+
+func (s *RealWorldService) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest) (reply *v1.UserReply, err error) {
+	return &v1.UserReply{
+		User: &v1.UserReply_User{
+			Username: "ALEX",
+		},
+	}, nil
+}
+
+func (s *RealWorldService) GetProfile(ctx context.Context, req *v1.GetProfileRequest) (reply *v1.ProfileReply, err error) {
+	return &v1.ProfileReply{
+		Profile: &v1.ProfileReply_Profile{
+			Username: "ALEX",
+		},
+	}, nil
+}
+
+func (s *RealWorldService) FollowUser(ctx context.Context, req *v1.FollowUserRequest) (reply *v1.ProfileReply, err error) {
+	return &v1.ProfileReply{
+		Profile: &v1.ProfileReply_Profile{
+			Username: "ALEX",
+		},
+	}, nil
+}
+
+func (s *RealWorldService) UnFollowUser(ctx context.Context, req *v1.UnFollowUserRequest) (reply *v1.ProfileReply, err error) {
+	return &v1.ProfileReply{
+		Profile: &v1.ProfileReply_Profile{
+			Username: "ALEX",
+		},
+	}, nil
+}
