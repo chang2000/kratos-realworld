@@ -21,7 +21,8 @@ import (
 // initApp init kratos application.
 func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
 	db := data.NewDB(confData)
-	dataData, cleanup, err := data.NewData(confData, logger, db)
+	client := data.NewOSSStore(confData)
+	dataData, cleanup, err := data.NewData(confData, logger, db, client)
 	if err != nil {
 		return nil, nil, err
 	}

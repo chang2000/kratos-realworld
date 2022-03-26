@@ -12,6 +12,9 @@ init:
 	go install github.com/go-kratos/kratos/cmd/protoc-gen-go-http/v2@latest
 	go install github.com/go-kratos/kratos/cmd/protoc-gen-go-errors/v2@latest
 	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+	go get github.com/minio/minio-go/v7
+	go get github.com/minio/minio-go/v7/pkg/credentials
+
 
 .PHONY: errors
 # generate errors code
@@ -66,6 +69,7 @@ all:
 	make errors;
 	make config;
 	make generate;
+	make wire;
 
 # show help
 help:

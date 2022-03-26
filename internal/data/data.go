@@ -5,25 +5,28 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
+	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewDB, NewUserRepo, NewProfileRepo)
+var ProviderSet = wire.NewSet(NewData, NewDB, NewOSSStore, NewUserRepo, NewProfileRepo)
 
 // Data .
 type Data struct {
 	// TODO wrapped database client
-	db *gorm.DB
+	db  *gorm.DB
+	oss *minio.Client
 }
 
 // NewData .
-func NewData(c *conf.Data, logger log.Logger, db *gorm.DB) (*Data, func(), error) {
+func NewData(c *conf.Data, logger log.Logger, db *gorm.DB, oss *minio.Client) (*Data, func(), error) {
 	cleanup := func() {
 		log.NewHelper(logger).Info("closing the data resources")
 	}
-	return &Data{db: db}, cleanup, nil
+	return &Data{db: db, oss: oss}, cleanup, nil
 }
 
 func NewDB(c *conf.Data) *gorm.DB {
@@ -37,4 +40,24 @@ func NewDB(c *conf.Data) *gorm.DB {
 		panic(err)
 	}
 	return db
+}
+
+func NewOSSStore(c *conf.Data) *minio.Client {
+	// ctx := context.Background()
+	endpoint := "localhost:19000"
+	accessKeyID := "admin"
+	secretAccessKey := "admin123456"
+
+	// Initialize minio client object.
+	minioClient, err := minio.New(endpoint, &minio.Options{
+		Creds: credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
+	})
+	if err != nil {
+		log.Debug(err)
+		return nil
+	}
+
+	log.Debug("%#v\n", minioClient) // minioClient is now set up
+	log.Debug("SUCCESSFULY CREATED minioClient")
+	return minioClient
 }

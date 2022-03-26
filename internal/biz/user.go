@@ -29,7 +29,7 @@ func NewUserUseCase(ur UserRepo, pr ProfileRepo, logger log.Logger) *UserUsecase
 
 func (uc *UserUsecase) Register(ctx context.Context, u *User) error {
 	if err := uc.ur.CreateUser(ctx, u); err != nil {
-
+		return err
 	}
 	return nil
 }
