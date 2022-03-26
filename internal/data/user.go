@@ -5,6 +5,7 @@ import (
 	"kratos-realworld/internal/biz"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/minio/minio-go/v7"
 )
 
 type userRepo struct {
@@ -33,4 +34,8 @@ func NewProfileRepo(data *Data, logger log.Logger) biz.ProfileRepo {
 
 func (r *userRepo) CreateUser(ctx context.Context, g *biz.User) error {
 	return nil
+}
+
+func (r *userRepo) GetStoreClient(ctx context.Context) *minio.Client {
+	return r.data.oss
 }

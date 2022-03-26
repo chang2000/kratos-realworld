@@ -1,6 +1,8 @@
 package server
 
 import (
+	"context"
+	"fmt"
 	v1 "kratos-realworld/api/realworld/v1"
 	"kratos-realworld/internal/conf"
 	"kratos-realworld/internal/service"
@@ -28,5 +30,14 @@ func NewHTTPServer(c *conf.Server, realworld *service.RealWorldService, logger l
 	}
 	srv := http.NewServer(opts...)
 	v1.RegisterRealWorldHTTPServer(srv, realworld)
+
+	ctx := context.Background()
+	httpHandler, err := realworld.RegisterHTTP(ctx, "", realworld.GetStoreClient(ctx))
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println("Failed to register upload http server")
+	}
+	srv.HandlePrefix("/upload", httpHandler)
+
 	return srv
 }

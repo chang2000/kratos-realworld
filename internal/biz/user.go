@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/minio/minio-go/v7"
 )
 
 type User struct {
@@ -12,6 +13,7 @@ type User struct {
 
 type UserRepo interface {
 	CreateUser(ctx context.Context, user *User) error
+	GetStoreClient(ctx context.Context) *minio.Client
 }
 
 type ProfileRepo interface {
@@ -32,4 +34,8 @@ func (uc *UserUsecase) Register(ctx context.Context, u *User) error {
 		return err
 	}
 	return nil
+}
+
+func (uc *UserUsecase) GetStoreClient(ctx context.Context) *minio.Client {
+	return uc.ur.GetStoreClient(ctx)
 }
