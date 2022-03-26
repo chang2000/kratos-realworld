@@ -1,3 +1,14 @@
+# Kratos Conduit 
+
+This [Conduit](https://github.com/gothinkster/realworld) backend implementation is based on following tech stacks
+
+- Kratos
+- MySQL
+- Ent
+- MinIO
+
+
+
 # Kratos Project Template
 
 ## Install Kratos
